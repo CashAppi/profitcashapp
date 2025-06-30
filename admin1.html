@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Approve Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #00c244;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 15px;
+      margin-bottom: 10px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-left: 10px;
+      padding: 5px 12px;
+      font-size: 14px;
+    }
+    #arrowContainer {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 999;
+}
+
+#nextArrow {
+  font-size: 40px;             /* Bigger/thicker arrow */
+  background-color: #00c244;     /* Button background */
+  color: white;                /* Arrow color */
+  border: none;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#nextArrow:hover {
+  background-color: #222;
+}
+  </style>
+</head>
+<body>
+ 
+  <h2>Pending Access Requests</h2>
+  <ul id="requestsList">Loading...</ul>
+
+<div id="arrowContainer">
+  <button id="nextArrow" title="Next Page">&#10148;</button> <!-- Unicode thick arrow -->
+</div>
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXXXX...", // Replace with your actual key
+      authDomain: "cashapp-63506.firebaseapp.com",
+      projectId: "cashapp-63506",
+      storageBucket: "cashapp-63506.appspot.com",
+      messagingSenderId: "524901760517",
+      appId: "1:524901760517:web:xxxxxxxxxxxx"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const list = document.getElementById('requestsList');
+
+    db.collection('access_requests')
+      .where('status', '==', 'pending')
+      .onSnapshot(snapshot => {
+        list.innerHTML = '';
+
+        if (snapshot.empty) {
+          list.textContent = 'No pending requests';
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement('li');
+
+          const name = data.name || 'Unnamed';
+          const time = data.requestedAt?.toDate?.().toLocaleString() || 'Unknown time';
+
+          li.innerHTML = `
+            <strong>${name}</strong> — requested on ${time}
+            <button>Approve</button>
+            <button>Deny</button>
+          `;
+
+          const approveBtn = li.querySelector('button:nth-of-type(1)');
+          approveBtn.onclick = () => {
+            db.collection('access_requests').doc(doc.id).update({ status: 'approved' });
+          };
+
+          const denyBtn = li.querySelector('button:nth-of-type(2)');
+          denyBtn.onclick = () => {
+            db.collection('access_requests').doc(doc.id).update({ status: 'denied' });
+          };
+
+          list.appendChild(li);
+        });
+      });
+      
+  document.getElementById('nextArrow').addEventListener('click', () => {
+    window.location.href = '/admin2.html'; // 🔁 Replace with your actual next page
+  });
+
+  </script>
+</body>
+</html>
