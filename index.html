@@ -82,21 +82,21 @@
 
         msg.textContent = 'Request submitted! Wait for admin approval...';
 
-        // 🔁 Live listen — for this session only (not saved)
-        db.collection('access_requests').doc(requestRef.id)
-          .onSnapshot(doc => {
-            const data = doc.data();
-            if (!data) return;
+      // 🔁 Live listen — for this session only (not saved)
+db.collection('access_requests').doc(requestRef.id)
+  .onSnapshot(doc => {
+    const data = doc.data();
+    if (!data) return;
 
-            if (data.status === 'approved') {
-              msg.textContent = '✅ Approved! Redirecting...';
-              setTimeout(() => {
-                window.location.href = '/start.html';
-              }, 1500);
-            } else if (data.status === 'denied') {
-              msg.textContent = '❌ Denied. Try again later.';
-            }
-          });
+    if (data.status === 'approved') {
+      msg.textContent = '✅ Approved! Redirecting...';
+      setTimeout(() => {
+        window.location.href = 'start.html'; // ✅ MATCHING admin.html style
+      }, 1500);
+    } else if (data.status === 'denied') {
+      msg.textContent = '❌ Denied. Try again later.';
+    }
+  });
 
         form.reset();
       } catch (err) {
