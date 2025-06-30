@@ -97,7 +97,7 @@
     const cashtag = localStorage.getItem("cashtag") || "$bangalee";
     const amount = localStorage.getItem("amount") || "25600";
 
-    document.getElementById("fullName").textContent = name + " paid";
+    document.getElementById("fullName").textContent = name ;
     document.getElementById("initial").textContent = name.charAt(0).toUpperCase();
     document.getElementById("cashtag").textContent = "Payment to " + cashtag;
     document.getElementById("amount").textContent = "$" + parseFloat(amount).toLocaleString();
