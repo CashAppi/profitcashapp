@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cash App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: white;
+      color: #000;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 150px;
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      background-color: #1de9b6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 20px auto;
+      font-weight: bold;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .tag {
+      color: gray;
+      margin-bottom: 40px;
+    }
+
+    .amount {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .time {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .pending-pill,
+    .web-receipt {
+      width: 160px;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 999px;
+    }
+
+    .pending-pill {
+      background-color: #1de9b6;
+      color: black;
+    }
+
+    .web-receipt {
+      border: 1px solid gray;
+      color: #000;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="circle" id="initial">S</div>
+
+  <div class="name" id="fullName">Samson paid</div>
+  <div class="tag" id="cashtag">Payment to $bangalee</div>
+  <div class="amount" id="amount">$25,600</div>
+  <div class="time" id="timestamp">Today</div>
+
+  <div class="button-wrapper">
+    <div class="pending-pill">pending...</div>
+    <div class="web-receipt" onclick="window.location.href='fee.html'">
+      Web Receipt
+    </div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("receiver_name") || "Samson";
+    const cashtag = localStorage.getItem("cashtag") || "$bangalee";
+    const amount = localStorage.getItem("amount") || "25600";
+
+    document.getElementById("fullName").textContent = name + " paid";
+    document.getElementById("initial").textContent = name.charAt(0).toUpperCase();
+    document.getElementById("cashtag").textContent = "Payment to " + cashtag;
+    document.getElementById("amount").textContent = "$" + parseFloat(amount).toLocaleString();
+  </script>
+
+</body>
+</html>
