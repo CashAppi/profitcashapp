@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cash App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+    }
+
+    .top-bar h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .icon {
+      font-size: 24px;
+      padding: 0 15px;
+      cursor: pointer;
+    }
+
+    .bitcoin-image {
+      width: 180px;
+      margin-top: 20px;
+    }
+
+    .main-heading {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0 10px;
+    }
+
+    .sub-heading {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .buy-btn {
+      background-color: #00bcd4;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .buy-btn:hover {
+      background-color: #009aa8;
+    }
+
+    .section-title {
+      text-align: left;
+      margin: 30px 0 10px 20px;
+      font-weight: bold;
+    }
+
+    .images-row {
+      display: flex;
+      justify-content: space-evenly;
+      padding: 10px;
+      flex-wrap: wrap;
+    }
+
+    .images-row img {
+      width: 45%;
+      border-radius: 10px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    .bottom-nav div {
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div onclick="window.location.href='home1.html'" style="cursor: pointer;">←</div>
+    <h2>Bitcoin</h2>
+    <div class="icon">⧉</div>
+  </div>
+
+  <!-- Bitcoin Illustration -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png" alt="Bitcoin" class="bitcoin-image">
+
+  <!-- Headings -->
+  <div class="main-heading">Buy bitcoin for as little as $1</div>
+  <div class="sub-heading">Whether you’re an expert or just getting started</div>
+
+  <!-- Buy Button -->
+  <a href="buy.html"><button class="buy-btn">Buy bitcoin</button></a>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .grid-item {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .grid-item img {
+      width: 100%;
+      border-radius: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .grid-item img:hover {
+      transform: scale(1.03);
+    }
+
+    .grid-item p {
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .section-divider {
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .setting-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .setting-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .setting-text {
+      font-weight: 600;
+    }
+
+    .setting-subtext {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .setting-status {
+      color: #888;
+      font-weight: 500;
+      min-width: 30px;
+      text-align: right;
+    }
+  </style>
+
+  <!-- Learn Section -->
+  <div class="section-title">Learn the basics of bitcoin</div>
+  <div class="images-row"></div>
+
+  <!-- Top Grid Section -->
+  <div class="grid">
+    <div class="grid-item" onclick="openInfo('What is money?')">
+      <img src="https://via.placeholder.com/300x200.png?text=What+is+money%3F" alt="What is money?">
+      <p>What is money?</p>
+    </div>
+    <div class="grid-item" onclick="openInfo('What is bitcoin?')">
+      <img src="https://via.placeholder.com/300x200.png?text=What+is+bitcoin%3F" alt="What is bitcoin?">
+      <p>What is bitcoin?</p>
+    </div>
+    <div class="grid-item" onclick="openInfo('How does bitcoin work?')">
+      <img src="https://via.placeholder.com/300x200.png?text=How+does+bitcoin+work%3F" alt="How does bitcoin work?">
+      <p>How does bitcoin work?</p>
+    </div>
+    <div class="grid-item" onclick="openInfo('Why is bitcoin valuable?')">
+      <img src="https://via.placeholder.com/300x200.png?text=Why+is+bitcoin+valuable%3F" alt="Why is bitcoin valuable?">
+      <p>Why is bitcoin valuable?</p>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider"></div>
+
+  <!-- Bitcoin Settings Section -->
+  <div class="section-title">
+    <span>Grow bitcoin over time</span>
+    <a href="#" style="font-size:14px; color: #555;" onclick="alert('Learn more about growing your bitcoin!')">Learn more</a>
+  </div>
+
+  <div class="setting-item" onclick="toggleSetting(this)">
+    <div class="setting-left">
+      <div class="setting-icon">⟳</div>
+      <div>
+        <div class="setting-text">Bitcoin Round Ups</div>
+        <div class="setting-subtext">Invest your spare change</div>
+      </div>
+    </div>
+    <div class="setting-status">Off</div>
+  </div>
+
+  <div class="setting-item" onclick="toggleSetting(this)">
+    <div class="setting-left">
+      <div class="setting-icon">🔁</div>
+      <div>
+        <div class="setting-text">Auto Invest</div>
+        <div class="setting-subtext">Set up recurring buys</div>
+      </div>
+    </div>
+    <div class="setting-status">Off</div>
+  </div>
+
+  <div class="setting-item" onclick="toggleSetting(this)">
+    <div class="setting-left">
+      <div class="setting-icon">💵</div>
+      <div>
+        <div class="setting-text">Paid in bitcoin</div>
+        <div class="setting-subtext">Invest your direct deposits into bitcoin without a fee</div>
+      </div>
+    </div>
+    <div class="setting-status">Off</div>
+  </div>
+
+  <script>
+  function openInfo(topic) {
+    alert("Opening article: " + topic);
+  }
+
+    function toggleSetting(el) {
+      const status = el.querySelector('.setting-status');
+      if (status.innerText === 'Off') {
+        status.innerText = 'On';
+        status.style.color = 'green';
+      } else {
+        status.innerText = 'Off';
+        status.style.color = '#888';
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .btc-price {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .section-divider {
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .option-icon {
+      background-color: #f2f2f2;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .option-text {
+      font-weight: 600;
+    }
+
+    .option-subtext {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .cash-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .cash-card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+    }
+
+    .cash-card-title {
+      font-weight: 700;
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+
+    .cash-card-text {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .cash-card-button {
+      display: inline-block;
+      padding: 12px 16px;
+      background-color: #eee;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      color: #000;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .cash-card-button:hover {
+      background-color: #ddd;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .footer-text a {
+      color: #555;
+      text-decoration: underline;
+    }
+  </style>
+
+  <!-- Bitcoin Price -->
+  <div class="btc-price">
+    <div>Price per bitcoin</div>
+    <div id="btcPrice">$0.00</div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Ways to Use Bitcoin -->
+  <div class="section-title">Ways to use bitcoin</div>
+
+  <div class="option-row" onclick="alert('Opening your bitcoin deposit address...')">
+    <div class="option-left">
+      <div class="option-icon">📥</div>
+      <div>
+        <div class="option-text">Deposit bitcoin</div>
+        <div class="option-subtext">Get your bitcoin address</div>
+      </div>
+    </div>
+    <div>›</div>
+  </div>
+
+  <!-- Spend cash, earn bitcoin -->
+  <div class="cash-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png" alt="Cash Card">
+    <div class="cash-card-title">Spend cash, earn bitcoin</div>
+    <div class="cash-card-text">
+      Get a Cash App Card to earn bitcoin or turn part of your paycheck into bitcoin.
+    </div>
+    <a class="cash-card-button" href="https://cash.app/card" target="_blank">
+      Order your Cash App Card
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-text">
+    Bitcoin services by Block, Inc. See <a href="#">disclosures</a>.
+  </div>
+
+  <!-- JavaScript to Fetch Live Price -->
+  <script>
+    async function updateBitcoinPrice() {
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await res.json();
+        const price = data.bitcoin.usd.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2
+        });
+        document.getElementById('btcPrice').textContent = price;
+      } catch (error) {
+        document.getElementById('btcPrice').textContent = 'Unavailable';
+      }
+    }
+
+    updateBitcoinPrice();
+    setInterval(updateBitcoinPrice, 30000);
+  </script>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="home1.html" class="nav-icon">🏠</a>
+    <div>⬜</div>
+    <div onclick="window.location.href='keypad.html'" style="cursor: pointer;">💲</div>
+    <div>🔍</div>
+    <a href="history.html" style="text-decoration: none;">
+      <div style="cursor: pointer; font-size: 24px;">🕒</div>
+    </a>
+  </div>
+
+</body>
+</html>
