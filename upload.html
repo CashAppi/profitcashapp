@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Upload</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      display: block;
+      margin-top: 15px;
+      font-size: 16px;
+      width: 100%;
+      padding: 10px;
+    }
+    img.preview {
+      margin-top: 20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: none;
+    }
+    .info {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    #uploadedPhotos {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    #uploadedPhotos div {
+      width: 100px;
+      text-align: center;
+    }
+    #uploadedPhotos img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    #uploadedPhotos div div {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    a {
+      display: block;
+      margin-top: 10px;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Admin: Upload Profile Picture</h2>
+
+  <input type="text" id="nameInput" placeholder="Enter name (e.g. Samson)" />
+  <input type="file" accept="image/*" onchange="previewImage(event)" />
+  <button onclick="saveToFirestore()">Save Photo</button>
+
+  <img id="preview" class="preview" />
+  <div class="info" id="message"></div>
+
+  <h3>Uploaded Profile Pictures</h3>
+  <div id="uploadedPhotos">Loading photos...</div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Your Firebase config here:
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXXXX...", // Replace with your actual key
+      authDomain: "cashapp-63506.firebaseapp.com",
+      projectId: "cashapp-63506",
+      storageBucket: "cashapp-63506.appspot.com",
+      messagingSenderId: "524901760517",
+      appId: "1:524901760517:web:xxxxxxxxxxxx"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let base64Image = "";
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        base64Image = e.target.result;
+        const preview = document.getElementById("preview");
+        preview.src = base64Image;
+        preview.style.display = "block";
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function saveToFirestore() {
+      const name = document.getElementById("nameInput").value.trim();
+
+      if (!name) {
+        alert("Please enter a name.");
+        return;
+      }
+
+      if (!base64Image) {
+        alert("Please upload a photo.");
+        return;
+      }
+
+      const uniqueKey = name.toLowerCase(); // Use name as doc ID
+      const data = { image: base64Image };
+
+      db.collection("user_photos").doc(uniqueKey).set(data)
+        .then(() => {
+          document.getElementById("message").innerHTML =
+            `✅ Photo saved for <strong>${name}</strong><br>
+             <a href="receipt.html?user=${uniqueKey}" target="_blank">View Receipt</a>`;
+          document.getElementById("message").style.color = "green";
+
+          localStorage.setItem("receiver_name", uniqueKey);
+
+          // Reset inputs
+          base64Image = "";
+          document.getElementById("nameInput").value = "";
+          document.getElementById("preview").style.display = "none";
+
+          // Reload photos list
+          loadUploadedPhotos();
+        })
+        .catch(error => {
+          document.getElementById("message").innerText = "❌ Failed to save photo.";
+          document.getElementById("message").style.color = "red";
+          console.error("Error saving photo:", error);
+        });
+    }
+
+    function loadUploadedPhotos() {
+      const container = document.getElementById("uploadedPhotos");
+      container.innerHTML = "Loading photos...";
+
+      db.collection("user_photos").get()
+        .then(snapshot => {
+          container.innerHTML = ""; // clear loading
+
+          if (snapshot.empty) {
+            container.textContent = "No photos uploaded yet.";
+            return;
+          }
+
+          snapshot.forEach(doc => {
+            const username = doc.id;
+            const photoUrl = doc.data().image;
+
+            const photoDiv = document.createElement("div");
+            photoDiv.style.textAlign = "center";
+
+            const img = document.createElement("img");
+            img.src = photoUrl;
+            img.alt = username;
+
+            const nameLabel = document.createElement("div");
+            nameLabel.textContent = username.charAt(0).toUpperCase() + username.slice(1);
+
+            photoDiv.appendChild(img);
+            photoDiv.appendChild(nameLabel);
+
+            container.appendChild(photoDiv);
+          });
+        })
+        .catch(err => {
+          container.textContent = "Failed to load photos.";
+          console.error(err);
+        });
+    }
+
+    window.onload = () => {
+      loadUploadedPhotos();
+    };
+  </script>
+
+</body>
+</html>
