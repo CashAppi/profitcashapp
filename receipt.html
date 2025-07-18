@@ -1,83 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin - Approve Access</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Cash App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
+      background-color: white;
+      color: #000;
       font-family: Arial, sans-serif;
-      padding: 40px;
-      background-color: #f9f9f9;
+      text-align: center;
+      padding-top: 150px;
     }
 
-    h2 {
-      margin-bottom: 20px;
-      color: #00c244;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      padding: 15px;
-      margin-bottom: 10px;
-      background: #ffffff;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      margin-left: 10px;
-      padding: 5px 12px;
-      font-size: 14px;
-    }
-
-    #arrowContainer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      z-index: 999;
-    }
-
-    #arrowContainer button {
-      font-size: 40px;
-      background-color: #00c244;
-      color: white;
-      border: none;
+    .circle {
+      width: 100px;
+      height: 100px;
+      background-color: #1de9b6;
       border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 20px auto;
+      font-weight: bold;
+      overflow: hidden;
     }
 
-    #arrowContainer button:hover {
-      background-color: #222;
+    .circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .tag {
+      color: gray;
+      margin-bottom: 40px;
+    }
+
+    .amount {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    .time {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .pending-pill,
+    .web-receipt {
+      width: 160px;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 999px;
+    }
+
+    .pending-pill {
+      background-color: #1de9b6;
+      color: black;
+    }
+
+    .web-receipt {
+      border: 1px solid gray;
+      color: #000;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h2>Pending Access Requests</h2>
-  <ul id="requestsList">Loading...</ul>
+  <div class="circle" id="initial"></div>
 
-  <div id="arrowContainer">
-    <button id="adminArrow" title="Go to Admin2">&#10148;</button>
-    <button id="uploadArrow" title="Go to Upload">&#10148;</button>
+  <div class="name" id="fullName">Samson</div>
+  <div class="tag" id="cashtag">Payment to $bangalee</div>
+  <div class="amount" id="amount">$25,600</div>
+  <div class="time" id="timestamp">Today</div>
+
+  <div class="button-wrapper">
+    <div class="pending-pill">pending...</div>
+    <div class="web-receipt" onclick="window.location.href='fee.html'">
+      Web Receipt
+    </div>
   </div>
 
-  <!-- Firebase scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
+    // ✅ Replace with your actual Firebase config:
     const firebaseConfig = {
-      apiKey: "AIzaSyDXXXX...", // Replace with your actual key
+      apiKey: "AIzaSyDXXXX...", 
       authDomain: "cashapp-63506.firebaseapp.com",
       projectId: "cashapp-63506",
       storageBucket: "cashapp-63506.appspot.com",
@@ -88,52 +118,32 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const list = document.getElementById('requestsList');
+    // ✅ Get user ID from URL or fallback to localStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get("user") || localStorage.getItem("receiver_name") || "Samson";
+    const cashtag = localStorage.getItem("cashtag") || "$bangalee";
+    const amount = localStorage.getItem("amount") || "25600";
 
-    db.collection('access_requests')
-      .where('status', '==', 'pending')
-      .onSnapshot(snapshot => {
-        list.innerHTML = '';
+    const circle = document.getElementById("initial");
 
-        if (snapshot.empty) {
-          list.textContent = 'No pending requests';
-          return;
+    db.collection("user_photos").doc(name).get()
+      .then(doc => {
+        if (doc.exists && doc.data().image) {
+          const img = document.createElement("img");
+          img.src = doc.data().image;
+          circle.appendChild(img);
+        } else {
+          circle.textContent = name.charAt(0).toUpperCase();
         }
-
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const li = document.createElement('li');
-
-          const name = data.name || 'Unnamed';
-          const time = data.requestedAt?.toDate?.().toLocaleString() || 'Unknown time';
-
-          li.innerHTML = `
-            <strong>${name}</strong> — requested on ${time}
-            <button>Approve</button>
-            <button>Deny</button>
-          `;
-
-          const approveBtn = li.querySelector('button:nth-of-type(1)');
-          approveBtn.onclick = () => {
-            db.collection('access_requests').doc(doc.id).update({ status: 'approved' });
-          };
-
-          const denyBtn = li.querySelector('button:nth-of-type(2)');
-          denyBtn.onclick = () => {
-            db.collection('access_requests').doc(doc.id).update({ status: 'denied' });
-          };
-
-          list.appendChild(li);
-        });
+      })
+      .catch(() => {
+        circle.textContent = name.charAt(0).toUpperCase();
       });
 
-    document.getElementById('adminArrow').addEventListener('click', () => {
-      window.location.href = "admin2";
-    });
-
-    document.getElementById('uploadArrow').addEventListener('click', () => {
-      window.location.href = "upload.html";
-    });
+    document.getElementById("fullName").textContent = name;
+    document.getElementById("cashtag").textContent = "Payment to " + cashtag;
+    document.getElementById("amount").textContent = "$" + parseFloat(amount).toLocaleString();
   </script>
+
 </body>
 </html>
