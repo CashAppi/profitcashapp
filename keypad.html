@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cash App</title>
+
+   <!-- ✅ Correct Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body {
       margin: 0;
@@ -65,6 +69,57 @@
       border: none;
       cursor: pointer;
     }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #00d632;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 45px;
+      border-top: 1px solid #00d632;
+      z-index: 1000;
+    }
+
+    .nav-icon {
+      font-size: 25px;
+      font-weight: 20000;
+      color: gray;
+      text-decoration: none;
+      text-shadow: 0 0 1px gray;
+    }
+
+    .nav-icon.active {
+      color: black;
+    }
+
+    /* Square icon with dot */
+    .custom-square {
+      width: 24px;
+      height: 24px;
+      border: 3px solid gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+    }
+
+    .custom-square span {
+      width: 6px;
+      height: 6px;
+      background: gray;
+      border-radius: 2px;
+    }
+
+    .custom-square.active {
+      border-color: black;
+    }
+
+    .custom-square.active span {
+      background: black;
+    }
   </style>
 </head>
 <body>
@@ -91,12 +146,29 @@
     <button class="action-button" onclick="handlePay()">Pay</button>
   </div>
 
-  <div class="navbar">
-    <a href="home1.html" class="nav-icon">🏠</a>
-    <a href="card.html" class="nav-icon">🧾</a>
-    <a href="keypad.html" class="nav-icon">💲</a>
-    <a href="search.html" class="nav-icon">🔍</a>
-    <a href="history.html" class="nav-icon">⏱</a>
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <!-- Home -->
+    <a href="home1.html" class="nav-icon active">
+      <i class="fas fa-landmark"></i>
+    </a>
+
+    
+
+    <!-- Dollar -->
+    <a href="keypad.html" class="nav-icon">
+      <i class="fas fa-dollar-sign"></i>
+    </a>
+
+    <!-- Search -->
+    <a href="search.html" class="nav-icon">
+      <i class="fas fa-search"></i>
+    </a>
+
+    <!-- Clock -->
+    <a href="history.html" class="nav-icon">
+      <i class="fas fa-clock"></i>
+    </a>
   </div>
 
   <script>
