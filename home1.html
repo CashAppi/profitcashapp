@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cash App</title>
+
+   <!-- ✅ Correct Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body {
       margin: 0;
@@ -166,6 +170,57 @@
   white-space: nowrap;
   pointer-events: none;
 }
+ .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 45px;
+      border-top: 1px solid #ddd;
+      z-index: 1000;
+    }
+
+    .nav-icon {
+      font-size: 25px;
+      font-weight: 20000;
+      color: gray;
+      text-decoration: none;
+      text-shadow: 0 0 1px gray;
+    }
+
+    .nav-icon.active {
+      color: black;
+    }
+
+    /* Square icon with dot */
+    .custom-square {
+      width: 24px;
+      height: 24px;
+      border: 3px solid gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+    }
+
+    .custom-square span {
+      width: 6px;
+      height: 6px;
+      background: gray;
+      border-radius: 2px;
+    }
+
+    .custom-square.active {
+      border-color: black;
+    }
+
+    .custom-square.active span {
+      background: black;
+    }
   </style>
 </head>
 <body>
@@ -223,15 +278,8 @@
     </div>
   </div>
 
-  <div class="nav-bar">
-    <div>🏠</div>
-    <div onclick="window.location.href='error.html'"style="cursor: pointer;"> 🗂</div>
-    <div onclick="window.location.href='keypad.html'" style="cursor: pointer;">💲</div>
-    <div onclick="window.location.href='search.html'" style="cursor: pointer;">🔍</div>
-    <a href="history.html" style="text-decoration: none;">
-  <div style="cursor: pointer; font-size: 24px;">🕒</div>
-</a>
-  </div>
+ 
+
   
 
 </body>
@@ -243,49 +291,33 @@
       
 
 
-  
-  <div class="section-title">More ways to add money</div>
-  <div class="card">
-    <div class="list-item">
-      <div class="icon">💵</div>
-      <div class="item-text">
-        <div><strong>Deposit paper money</strong></div>
-           <small>       Find a nearby retailer</small>
-      </div>
-    </div>
+   
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav">
+    <!-- Home -->
+    <a href="home1.html" class="nav-icon active">
+      <i class="fas fa-landmark"></i>
+    </a>
 
-    <div class="list-item">
-      <div class="icon">📷</div>
-      <div class="item-text">
-        <div><strong>Deposit check</strong></div>
-        <small>Scan with your phone</small>
-      </div>
-    </div>
+    
 
-    <div class="list-item">
-      <div class="icon">🔁</div>
-      <div class="item-text">
-        <div><strong>Auto reload</strong></div>
-        <small>Add money automatically</small>
-      </div>
-    </div>
+    <!-- Dollar -->
+    <a href="keypad.html" class="nav-icon">
+      <i class="fas fa-dollar-sign"></i>
+    </a>
 
-    <div class="list-item">
-      <div class="icon">🏦</div>
-      <div class="item-text">
-        <div><strong>Direct deposit</strong></div>
-        <small>Get paid up to 2 days faster</small>
-      </div>
-    </div>
+    <!-- Search -->
+    <a href="search.html" class="nav-icon">
+      <i class="fas fa-search"></i>
+    </a>
 
-    <div class="list-item">
-      <div class="icon">🔃</div>
-      <div class="item-text">
-        <div><strong>Get bank or wire transfer</strong></div>
-        <small>Send from another account</small>
-      </div>
-    </div>
+    <!-- Clock -->
+    <a href="history.html" class="nav-icon">
+      <i class="fas fa-clock"></i>
+    </a>
   </div>
+
+
 
 
   <div class="container">
