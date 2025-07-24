@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cash App</title>
+  <title>Cash App Receipt</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -105,20 +105,33 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // ✅ Replace with your actual Firebase config:
-    const firebaseConfig = {
-      apiKey: "AIzaSyDXXXX...", 
-      authDomain: "cashapp-63506.firebaseapp.com",
-      projectId: "cashapp-63506",
-      storageBucket: "cashapp-63506.appspot.com",
-      messagingSenderId: "524901760517",
-      appId: "1:524901760517:web:xxxxxxxxxxxx"
+    // Display: Masked config (for visibility)
+    const maskedConfig = {
+      apiKey: "AIzaSyDXXXXXXXGO9QyL6tVck", // 🔒 partially masked
+      authDomain: "authentication-1-23ad8.firebaseapp.com",
+      projectId: "authentication-1-23ad8",
+      storageBucket: "authentication-1-23ad8.appspot.com",
+      messagingSenderId: "6750XXXX3929",
+      appId: "1:675055833929:web:XXXXXXXXcb758098",
+      measurementId: "G-XXXXXX87"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    // Real working config (fully functional behind the scenes)
+    const realConfig = {
+      apiKey: "AIzaSyDsRgZzus1HAICDCp7p4icbGO9QyL6tVck",
+      authDomain: "authentication-1-23ad8.firebaseapp.com",
+      projectId: "authentication-1-23ad8",
+      storageBucket: "authentication-1-23ad8.appspot.com",
+      messagingSenderId: "675055833929",
+      appId: "1:675055833929:web:4cd77cc1e57526cb758098",
+      measurementId: "G-Y5M23YYP87"
+    };
+
+    // Initialize Firebase using real config
+    firebase.initializeApp(realConfig);
     const db = firebase.firestore();
 
-    // ✅ Get user ID from URL or fallback to localStorage
+    // Get name, cashtag, and amount from localStorage or URL
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get("user") || localStorage.getItem("receiver_name") || "Samson";
     const cashtag = localStorage.getItem("cashtag") || "$bangalee";
@@ -126,7 +139,8 @@
 
     const circle = document.getElementById("initial");
 
-    db.collection("user_photos").doc(name).get()
+    // Load image from Firestore and show in circle
+    db.collection("user_photos").doc("globalProfile").get()
       .then(doc => {
         if (doc.exists && doc.data().image) {
           const img = document.createElement("img");
@@ -140,6 +154,7 @@
         circle.textContent = name.charAt(0).toUpperCase();
       });
 
+    // Set text content
     document.getElementById("fullName").textContent = name;
     document.getElementById("cashtag").textContent = "Payment to " + cashtag;
     document.getElementById("amount").textContent = "$" + parseFloat(amount).toLocaleString();
