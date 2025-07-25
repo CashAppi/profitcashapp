@@ -39,6 +39,15 @@
       margin: 0 auto 30px auto;
     }
 
+    .profile-pic {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px auto;
+      display: none; /* Only shows if image exists */
+    }
+
     .message {
       font-size: 24px;
       font-weight: bold;
@@ -58,7 +67,7 @@
       max-width: 400px;
       cursor: pointer;
       margin: 0 auto;
-      margin-bottom: 40px; /* ⬅ adds spacing from bottom edge */
+      margin-bottom: 40px;
     }
 
     .btn-done:active {
@@ -71,8 +80,9 @@
   <div class="container">
     <div class="top-section">
       <div class="icon-success">✓</div>
+      <img class="profile-pic" id="profilePic" alt="Receiver Picture" />
       <div class="message" id="message">
-        <!-- JS will insert text here -->
+        <!-- JS inserts text here -->
       </div>
     </div>
 
@@ -80,28 +90,33 @@
   </div>
 
   <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const amountRaw = localStorage.getItem("amount") || "0.00";
-    const payer = localStorage.getItem("payer_name") || "the sender";
-    const receiver = localStorage.getItem("receiver_name") || "the receiver";
+    window.addEventListener('DOMContentLoaded', () => {
+      const amountRaw = localStorage.getItem("amount") || "0.00";
+      const payer = localStorage.getItem("payer_name") || "the sender";
+      const receiver = localStorage.getItem("receiver_name") || "the receiver";
+      const picUrl = localStorage.getItem("receiver_pic") || "";
 
-    const amount = parseFloat(amountRaw).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      const amount = parseFloat(amountRaw).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      document.getElementById("message").innerHTML = `
+        Sent! $${amount} will be deposited<br>
+        to <strong>${receiver}</strong> once<br>
+        <strong>${payer}</strong> completes the payment.
+      `;
+
+      if (picUrl) {
+        const img = document.getElementById("profilePic");
+        img.src = picUrl;
+        img.style.display = "block";
+      }
+
+      window.goToReceipt = function () {
+        window.location.href = "mail.html";
+      };
     });
-
-    console.log("Loaded receiver:", receiver); // For debugging
-
-    document.getElementById("message").innerHTML = `
-      Sent! $${amount} will be deposited<br>
-      to <strong>${receiver}</strong> once<br>
-      <strong>${payer}</strong> completes the payment.
-    `;
-
-    window.goToReceipt = function () {
-      window.location.href = "mail.html";
-    };
-  });
-</script>
+  </script>
 </body>
 </html>
